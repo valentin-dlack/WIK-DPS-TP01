@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app = require("express")();
-const port = process.env.PORT || '3000'; //use port 3000 unless there exists a preconfigured port
+const port = process.env.PING_LISTEN_PORT || '3000'; //use port 3000 unless there exists a preconfigured port
 function TestError(test) {
     if (test === true)
         return false;
@@ -15,12 +15,12 @@ function TestError(test) {
 app.set("json spaces", 2);
 app.get("/ping", (req, res, next) => {
     res.json(req.headers);
-    /*test the error handling :
-      try {
-          TestError(false);
-      } catch (e) {
-          next(e);
-      }*/
+    //uncomment to test the error handling :
+    /*try {
+        TestError(false);
+    } catch (e) {
+        next(e);
+    }*/
 });
 app.get('*', (req, res) => {
     res.status(404).json({ code: 404 });

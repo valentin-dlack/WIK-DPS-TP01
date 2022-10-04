@@ -9,7 +9,7 @@
 
 > Le script `npm run start` build le projet et lance le serveur.
 
-Le serveur est lancé sur le port 3000 par défaut, mais il est possible de le changer en passant une variable d'environnement `PORT`.
+Le serveur est lancé sur le port 3000 par défaut, mais il est possible de le changer en passant une variable d'environnement `PING_LISTEN_PORT`.
 
 Pour simplement build le projet, il suffit de lancer la commande `npm run build`.
 

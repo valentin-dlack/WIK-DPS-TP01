@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app: Express = require("express")();
-const port: string = process.env.PORT || '3000'; //use port 3000 unless there exists a preconfigured port
+const port: string = process.env.PING_LISTEN_PORT || '3000'; //use port 3000 unless there exists a preconfigured port
 
 function TestError(test: boolean): boolean | never {
     if (test === true)
