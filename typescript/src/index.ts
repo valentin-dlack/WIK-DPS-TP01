@@ -16,8 +16,8 @@ app.set("json spaces", 2);
 
 app.get("/ping", (req: Request, res: Response, next: Function) => {
   res.json(req.headers);
-  /*test the error handling :
-    try {
+  //uncomment to test the error handling :
+    /*try {
         TestError(false);
     } catch (e) {
         next(e);
