@@ -22,6 +22,10 @@ Il y a deux dockerfile disponibles :
 
 > Pour les utiliser, il suffit de renommer le dockerfile désiré en `Dockerfile` et de lancer la commande `docker build -t <name> .`
 
+## Scan de vulnérabilité
+
+![trivy](../assets/imgs/Screenshot_20221025_153431.png)
+
 ## Tests
 
 Il est possible de tester l'erreur 500 en décommentant la ligne 19 à 24 du fichier `src/index.ts`.
