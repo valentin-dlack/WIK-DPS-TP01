@@ -15,13 +15,13 @@ function TestError(test: boolean): boolean | never {
 app.set("json spaces", 2);
 
 app.get("/ping", (req: Request, res: Response, next: Function) => {
-  res.json(req.headers);
-  //uncomment to test the error handling :
-    /*try {
-        TestError(false);
+    try {
+        //uncomment to test the error handling :
+        //TestError(false);
+        res.json(req.headers);
     } catch (e) {
         next(e);
-    }*/
+    }
 });
 
 app.get('*', (req: Request, res: Response) => {

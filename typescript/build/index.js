@@ -14,13 +14,14 @@ function TestError(test) {
 }
 app.set("json spaces", 2);
 app.get("/ping", (req, res, next) => {
-    res.json(req.headers);
-    //uncomment to test the error handling :
-    /*try {
+    try {
         TestError(false);
-    } catch (e) {
+        res.json(req.headers);
+        //uncomment to test the error handling :
+    }
+    catch (e) {
         next(e);
-    }*/
+    }
 });
 app.get('*', (req, res) => {
     res.status(404).json({ code: 404 });
