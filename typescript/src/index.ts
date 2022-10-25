@@ -25,12 +25,14 @@ app.get("/ping", (req: Request, res: Response, next: Function) => {
 });
 
 app.get('*', (req: Request, res: Response) => {
-    res.status(404).json({ code: 404 });
+    res.status(404)
+    res.send()
 });
 
 app.use((err: Error, req: Request, res: Response, next: Function) => {
     console.error(err.stack);
-    res.status(500).json({ code: 500 });
+    res.status(500);
+    res.send();
 });
 
 app.listen(port, () => {

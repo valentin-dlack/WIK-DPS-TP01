@@ -15,16 +15,17 @@ function TestError(test) {
 app.set("json spaces", 2);
 app.get("/ping", (req, res, next) => {
     try {
-        TestError(false);
-        res.json(req.headers);
         //uncomment to test the error handling :
+        //TestError(false);
+        res.json(req.headers);
     }
     catch (e) {
         next(e);
     }
 });
 app.get('*', (req, res) => {
-    res.status(404).json({ code: 404 });
+    res.status(404);
+    res.send();
 });
 app.use((err, req, res, next) => {
     console.error(err.stack);
