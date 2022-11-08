@@ -1,5 +1,6 @@
 import { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import os from "os";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.get("/ping", (req: Request, res: Response, next: Function) => {
     try {
         //uncomment to test the error handling :
         //TestError(false);
+        console.log(os.hostname())
         res.json(req.headers);
     } catch (e) {
         next(e);

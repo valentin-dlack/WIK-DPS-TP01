@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  app:
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    ports:
+      - "80"
+
+    deploy:
+      replicas: 4
+    
+    restart: always
+
+    environment:
+      - PING_LISTEN_PORT=80
+
+    networks:
+      - app-network
+
+  proxy:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - app-network
+    
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
