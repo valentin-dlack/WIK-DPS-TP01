@@ -1,0 +1,101 @@
+# ---------- POD seul ----------
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: pingserver
+# spec:
+#   containers:
+#   - name: pingserver
+#     image: registry.cluster.wik.cloud/public/echo
+#     ports:
+#       - containerPort: 8080
+# ---
+
+# --------- ReplicaSet --------
+
+# apiVersion: apps/v1
+# kind: ReplicaSet
+# metadata:
+#   name: pingserver
+#   labels:
+#     app: ping
+# spec:
+#   replicas: 4
+#   selector:
+#     matchLabels:
+#       ping: pong
+#   template:
+#     metadata:
+#       labels:
+#         ping: pong
+#     spec:
+#       containers:
+#       - name: pingserver
+#         image: registry.cluster.wik.cloud/public/echo
+#         ports:
+#           - containerPort: 8080
+
+# -------- Service ----------
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: ping-service
+# spec:
+#   selector:
+#     ping: pong
+#   ports:
+#     - protocol: TCP
+#       port: 8080
+#       targetPort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingserver
+  labels:
+    app: pingserver
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      ping: pong
+  template:
+    metadata:
+      labels:
+        ping: pong
+    spec:
+      containers:
+      - name: pingserver
+        image: registry.cluster.wik.cloud/public/echo
+        ports:
+          - containerPort: 8080
+
+---
+# Ingress
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ping-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    host: prod.1337.com
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-service
+            port:
+              number: 8080
