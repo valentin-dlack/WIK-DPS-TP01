@@ -87,7 +87,43 @@ pingserver-846db87759-w2rzd   1/1     Running   0          2m29s
 
 - **Utilisation d'Ingress**
 
+> On ajoute ingress dans la config de kubernetes
 
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ping-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: 1337.fr
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-service
+            port:
+              number: 8080
+```
+
+> On ajoute le host dans le fichier hosts
+
+```sh
+~ sudo nano /etc/hosts
+
+192.168.49.2 1337.fr
+```
+
+- **Test de l'ingress**
+
+![ingress](assets/imgs/Screenshot_ingress.png)
+
+![ingress](assets/imgs/Screenshot_20221206_160216.png)
 
 ## Crédits
 
